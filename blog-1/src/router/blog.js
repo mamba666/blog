@@ -7,8 +7,15 @@ const handleBlogRouter=(req,res)=>{
     if(method==="GET"&&req.path==="/api/blog/list"){
         const author=req.query.author||""
         const keyword=req.query.keyword||""
-        const listData=getList(author,keyword)
-        return new SuccessModel(listData)
+        //写完mysql.js后，getList返回的就是promise了
+        //所以先注释这里之前写的
+        //
+        // const listData=getList(author,keyword)
+        // return new SuccessModel(listData)
+        const result=getList(author,keyword)
+        return result.then(listData=>{
+            return new SuccessModel(listData)
+        })
     }
     if(method==="GET"&&req.path==="/api/blog/detail"){
         //update和detail路由都需要获取id，所以可以提到全局

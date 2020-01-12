@@ -53,13 +53,29 @@ const serverHandle=(req,res)=>{
         req.body=postData
 
         //处理BLOG路由
-        const blogData=handleBlogRouter(req,res)
-        if(blogData){
-            res.end(
-                JSON.stringify(blogData)
-            )
+        //
+        //这里是在写完mysql.js后修改的
+        //blogResult返回promise
+        const blogResult=handleBlogRouter(req,res)
+        if(blogResult){
+            blogResult.then(blogData=>{
+                res.end(
+                    JSON.stringify(blogData)
+                )
+            })
             return
         }
+        
+
+        // const blogData=handleBlogRouter(req,res)
+        // if(blogData){
+        //     res.end(
+        //         JSON.stringify(blogData)
+        //     )
+        //     return
+        // }
+
+
         //处理USER路由
         const userData=handleUserRouter(req,res)
         if(userData){

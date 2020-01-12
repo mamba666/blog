@@ -1,21 +1,36 @@
+const exec=require("../db/mysql")
 const getList=(author,keyword)=>{
+    //where 1=1是因为假如author和keyword都没有传值
+    //那么where后面就直接是order，就会报错
+    let sql=`select * from blogs where 1=1 `
+    if(author){
+        sql+=`and author="${author}" `
+    }
+    if(keyword){
+        sql+=`and title like "${keyword}" `
+    }
+    sql+=`order by createtime desc;`
+    
+    //返回promise
+    return exec(sql)
+
     //先返回假数据
-    return [
-        {
-            id:1,
-            title:"A",
-            content:"AA",
-            author:"edison",
-            createTime:"11"
-        },
-        {
-            id:2,
-            title:"B",
-            content:"BB",
-            author:"KOBE",
-            createTime:"22"
-        }
-    ]
+    // return [
+    //     {
+    //         id:1,
+    //         title:"A",
+    //         content:"AA",
+    //         author:"edison",
+    //         createTime:"11"
+    //     },
+    //     {
+    //         id:2,
+    //         title:"B",
+    //         content:"BB",
+    //         author:"KOBE",
+    //         createTime:"22"
+    //     }
+    // ]
 }
 const getDetail=(id)=>{
     return {
