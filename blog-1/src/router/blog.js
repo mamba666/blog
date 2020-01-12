@@ -1,7 +1,8 @@
-const {getList}=require("../controller/blog")
+const {getList,getDetail,updateBlog,newBlog,delBlog}=require("../controller/blog")
 const {SuccessModel,ErrorModel}=require("../model/resModel")
 const handleBlogRouter=(req,res)=>{
     const method=req.method
+    const id=req.query.id
 
     if(method==="GET"&&req.path==="/api/blog/list"){
         const author=req.query.author||""
@@ -10,23 +11,31 @@ const handleBlogRouter=(req,res)=>{
         return new SuccessModel(listData)
     }
     if(method==="GET"&&req.path==="/api/blog/detail"){
-        return{
-            msg:"detail"
-        }
+        //update和detail路由都需要获取id，所以可以提到全局
+        //const id=req.query.id||""
+        const detailData=getDetail(id)
+        return new SuccessModel(detailData)
     }
     if(method==="POST"&&req.path==="/api/blog/new"){
-        return{
-            msg:"new"
-        }
+        //app.js中设置了"req.body=postData"
+        const data=newBlog(req.body)
+        return new SuccessModel(data)
     }
-    if(method==="POST"&&path==="/api/blog/update"){
-        return{
-            msg:"update"
+    if(method==="POST"&&req.path==="/api/blog/update"){
+        // const id=req.query.id||""
+        const result=updateBlog(id,req.body)
+        if(result){
+            return new SuccessModel()
+        }else{
+            return new ErrorModel("更新失败")
         }
     }
     if(method==="POST"&&req.path==="/api/blog/del"){
-        return{
-            msg:"del"
+        const result=delBlog(id)
+        if(result){
+            return new SuccessModel()
+        }else{
+            return new ErrorModel("删除失败")
         }
     }
 }

@@ -7,7 +7,6 @@ class BaseModel{
             data=null
             message=null
         }
-        //如果上面的data判断成功，则下面两个if也就没有意义了，不会执行
         if(data){
             this.data=data
         }
