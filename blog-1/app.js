@@ -1,7 +1,7 @@
 const querystring=require("querystring")
 const handleBlogRouter=require("./src/router/blog")
 const handleUserRouter=require("./src/router/user")
-const {SuccessModel,ErrorModel}=require("./src/model/resModel")
+// const {SuccessModel,ErrorModel}=require("./src/model/resModel")
 
 //使用promise
 //处理postdata，因为post是异步的
