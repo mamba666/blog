@@ -1,9 +1,9 @@
 //登录需要传入一个用户名和密码
-const loginCheck=(username,password)=>{
-    if(username==="edison"&&password==="123"){
+const login=(username,password)=>{
+    if(1){
         return true
     }else{
         return false
     }
 }
-module.exports=loginCheck
+module.exports=login

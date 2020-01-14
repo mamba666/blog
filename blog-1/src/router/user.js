@@ -1,4 +1,4 @@
-const loginCheck=require("../controller/user")
+const login=require("../controller/user")
 const {SuccessModel,ErrorModel}=require("../model/resModel")
 
 const handleUserRouter=(req,res)=>{
@@ -13,12 +13,20 @@ const handleUserRouter=(req,res)=>{
     if(method==="POST"&&req.path==="/api/user/login"){
         const {username,password}=req.body
         //对应上面
-        const result=loginCheck(username,password)
+        const result=login(username,password)
         if(result){
             return new SuccessModel("登录成功")
         }else{
             return new ErrorModel("登录失败")
         }
+    }
+
+    //登录验证的测试
+    if(method==="GET"&&req.path==="api/user/login-test"){
+        if(req.cookie.username){
+            return Promise.resolve(new SuccessModel())
+        }
+        return Promise.resolve(new ErrorModel("xxx"))
     }
 }
 module.exports=handleUserRouter
